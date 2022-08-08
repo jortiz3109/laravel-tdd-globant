@@ -2,27 +2,24 @@
 
 namespace App\Providers;
 
+use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
-    /**
-     * Register any application services.
-     *
-     * @return void
-     */
-    public function register()
+    public function boot(): void
     {
-        //
-    }
+        Paginator::useBootstrapFive();
 
-    /**
-     * Bootstrap any application services.
-     *
-     * @return void
-     */
-    public function boot()
-    {
-        //
+        Http::macro('exchangerApiLayer', function () {
+            return Http::withHeaders([
+                'apikey' => config('exchangers.api-layer.app-id'),
+            ])->baseUrl(config('exchangers.api-layer.endpoint'));
+        });
+
+        Http::macro('exchangerOpenExchange', function () {
+            return Http::baseUrl(config('exchangers.open-exchange.endpoint'));
+        });
     }
 }
