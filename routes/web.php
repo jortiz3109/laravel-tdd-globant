@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\ExchangeRatesController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +17,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::middleware(['exchange-rages.refresh'])
+    ->name('admin.exchange-rates.index')
+    ->get('admin/exchange-rates', [ExchangeRatesController::class, 'index']);
