@@ -21,7 +21,7 @@ class MockExchanger extends OpenExchange
             'license' => 'https://openexchangerates.org/license',
             'timestamp' => now()->timestamp,
             'base' => 'USD',
-            'rates' =>  [
+            'rates' => [
                 'COP' => 6000
             ]
         ];
@@ -34,7 +34,7 @@ class MockExchanger extends OpenExchange
     protected function prepareRates(array $response): array
     {
         $values = parent::prepareRates($response);
-        return collect($values)->map(function($rate) {
+        return collect($values)->map(function ($rate) {
             $rate['exchanger'] = 'MockExchanger';
             return $rate;
         })->toArray();
